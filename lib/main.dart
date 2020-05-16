@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text("Developed By \"Mayur Poptani\" as a submission \nfor FlutterKerala Week 2 Task", style: TextStyle(fontSize: 15, shadows: [Shadow(color: Colors.black12, offset: Offset(-3, 4))]), textAlign: TextAlign.center,),
+                  child: Text("Developed By \"Mayur Poptani\" as a submission \nfor FlutterKerala Week 2 Task", style: TextStyle(fontSize: 15, shadows: [Shadow(color: Colors.white12, offset: Offset(-3, 4))]), textAlign: TextAlign.center,),
                 ),
               ],
             ),
