@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 
 class MultiColorContainer extends StatelessWidget {
   
-  final double height;
-
-  MultiColorContainer({Key key, this.height}) : super(key: key);
-  
-  Size deviceSize;
-  
+  const MultiColorContainer({Key key,}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    deviceSize = MediaQuery.of(context).size;
+    Size deviceSize = MediaQuery.of(context).size;
     //deviceSize = Size(deviceSize.width, deviceSize.height*0.85);
     return Container(
-      height: height,
       child: Stack(
         children: [
           Container(color: Colors.blue.shade900),
