@@ -28,25 +28,61 @@ class _QuizPageState extends State<QuizPage> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              child: MultiColorContainer(),
-              foregroundDecoration: dataFetched?BoxDecoration(color: Colors.black26):null,
-            ),
-            Container(
-              padding: const EdgeInsets.all(15),
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 350),
-                child: child,
-                transitionBuilder: (child, animation) {
-                  return FadeTransition(opacity: animation, child: child, );
-                },
+    return WillPopScope(
+      onWillPop: () async {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (_) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              title: Text("Go Back To Home?", style: TextStyle(color: Colors.black),),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Yes", style: TextStyle(color: Colors.black),),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();  
+                  },
+                ),
+                FlatButton(
+                  child: Text("No", style: TextStyle(color: Colors.black),),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          }
+        );
+        return false;
+      },
+      child: Scaffold(
+        body: Container(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                child: MultiColorContainer(),
+                foregroundDecoration: dataFetched?BoxDecoration(color: Colors.black26):null,
               ),
-            ),
-          ],
+              Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      child: AnimatedSwitcher(
+                        duration: Duration(milliseconds: 350),
+                        child: child,
+                        transitionBuilder: (child, animation) {
+                          return FadeTransition(opacity: animation, child: child, );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -57,13 +93,13 @@ class _QuizPageState extends State<QuizPage> {
     Map<String,dynamic> data;
     try{
       Response res = await Http.get("http://www.mocky.io/v2/5ebd2f5f31000018005b117f");
-      print("Status Code = "+res.statusCode.toString());
-      print(res.body.toString());
+      //print("Status Code = "+res.statusCode.toString());
+      //print(res.body.toString());
       dataFetched = true;
       try{
         data = jsonDecode(res.body) as Map<String,dynamic>;
         await Future.delayed(Duration(seconds: 1));
-        setState(() {
+        if(mounted) setState(() {
           questions = Question.getQuestionsList(data);
           child = ShowQuestions(questions);
         });
