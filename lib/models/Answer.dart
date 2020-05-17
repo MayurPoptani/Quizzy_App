@@ -6,6 +6,10 @@ class Answer {
   
   static List<Answer> getAnswersList(dynamic answersData) {
     List<Answer> list = [];
+    var tempMap = (answersData as List<dynamic>);
+    tempMap.forEach((element) {
+      list.add(Answer(element["Answers"] as String, element["isTrue"] as bool));
+    });
     return list;
   }
   

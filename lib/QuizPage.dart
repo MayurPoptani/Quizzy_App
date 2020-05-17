@@ -32,7 +32,10 @@ class _QuizPageState extends State<QuizPage> {
       body: Container(
         child: Stack(
           children: <Widget>[
-            MultiColorContainer(),
+            Container(
+              child: MultiColorContainer(),
+              foregroundDecoration: dataFetched?BoxDecoration(color: Colors.black26):null,
+            ),
             Container(
               padding: const EdgeInsets.all(15),
               child: AnimatedSwitcher(
@@ -55,7 +58,7 @@ class _QuizPageState extends State<QuizPage> {
     try{
       Response res = await Http.get("http://www.mocky.io/v2/5ebd2f5f31000018005b117f");
       print("Status Code = "+res.statusCode.toString());
-      //print(res.body.toString());
+      print(res.body.toString());
       dataFetched = true;
       try{
         data = jsonDecode(res.body) as Map<String,dynamic>;
